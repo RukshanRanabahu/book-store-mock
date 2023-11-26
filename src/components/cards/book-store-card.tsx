@@ -18,7 +18,8 @@ type BooksArray = {
     isbn13: string,
     price: string,
     image: string,
-    url: string
+    url: string,
+    quantity?:number
 }
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
@@ -46,6 +47,22 @@ export default function BookStoreCard(props: BooksArray) {
         setOpen(true);
     };
 
+    const handleAddToCart = () => {
+        const index = cart.findIndex(e => e.isbn13 === props.isbn13);
+        if (index == -1) {
+            setCart([...cart, {
+                isbn13: props.isbn13,
+                price: props.price,
+                title: props.title,
+                subtitle: props.subtitle,
+                image: props.image,
+                url: props.url,
+                quantity: itemCount,
+            }]);
+            handleClick();
+        }
+    };
+
     const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
             return;
@@ -53,7 +70,7 @@ export default function BookStoreCard(props: BooksArray) {
 
         setOpen(false);
     };
-    
+
     return (
         <div>
             <Card sx={{ display: 'flex' }}>
@@ -107,16 +124,7 @@ export default function BookStoreCard(props: BooksArray) {
                                 className='button-black-border'
                                 variant="outlined"
                                 onClick={() => {
-                                    setCart([...cart, {
-                                        isbn13: props.isbn13,
-                                        price: props.price,
-                                        title: props.title,
-                                        subtitle: props.subtitle,
-                                        image: props.image,
-                                        url: props.url,
-                                        quantity: itemCount,
-                                    }]);
-                                    handleClick();
+                                    handleAddToCart();
                                 }
                                 }
                             >add to cart</Button>

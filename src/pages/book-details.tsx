@@ -17,7 +17,7 @@ export default function BookDetails() {
             <div style={{ margin: '40px' }}>
                 <Box sx={{ flexGrow: 1 }}>
                     {selectedItem.title != '' &&
-                        <BookStoreCard image={selectedItem.image} title={selectedItem.title} subtitle={selectedItem.subtitle} isbn13={selectedItem.isbn13} price={selectedItem.price} url={selectedItem.url} />
+                        <BookStoreCard image={selectedItem.image} title={selectedItem.title} subtitle={selectedItem.subtitle} isbn13={selectedItem.isbn13} price={selectedItem.price} url={selectedItem.url} quantity={selectedItem.quantity} />
                     }
                 </Box>
             </div>
