@@ -2,26 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: lightgray;
+}
+
+.page-heading {
+  text-align: center;
+}
+
+.searchbar-container {
+  display: flex;
+  justify-content: flex-end;
+  height: 40px;
+  margin: 20px;
+}
+
+.cart-card {
+  color: rgb(0, 0, 0);
+  height: 100px;
+  width: 100px;
+  display: inline-block;
+  text-align: center;
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 50px;
+  cursor: pointer;
+  margin-top: -30px;
+}
+
+.allign-card-buttons {
+  display: flex;
+  justify-content: center;
+  /* flex-direction: row; */
+}
+
+.cart-button-box {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
 }
