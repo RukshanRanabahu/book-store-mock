@@ -1,71 +1,51 @@
-import Image from 'next/image'
-import { useContext, useEffect, useState } from 'react';
-import TypographyComponent from '../atoms/typography/typography';
-import Constants from '../constants.json'
-import SearchField from '@/atoms/common-components/search-field';
-import { Box, Button, Grid } from '@mui/material';
-import axios from 'axios';
-import BookStoreCard from '@/molecules/cards/book-store-card';
-import { useMyContext } from '../pages/my-context';
-
-const typography_variants = Constants.typography_variants;
-
-type BooksArray = {
-  title: string,
-  subtitle: string,
-  isbn13: string,
-  price: string,
-  image: string,
-  url: string
-}
-
-type NewBooks = {
-  error: string,
-  total: string,
-  books: BooksArray[]
-};
-
-const newBooksdata: NewBooks = {
-  error: "0",
-  total: "0",
-  books: []
-};
+import { useEffect, useState } from 'react';
+import SearchField from '@/components/search-field/search-field';
+import { Box, Grid, Typography } from '@mui/material';
+import BookStoreCard from '@/components/cards/book-store-card';
+import { useMyContext } from '../context/my-context';
+import { useRouter } from 'next/router';
+import { getNewBooks } from '../actions/get-new-books'
 
 export default function Home() {
-  const [newBooks, setNewBooks] = useState<NewBooks>(newBooksdata);
-  const [ cartTotalPrice, setCartTotalPrice ] = useState(0);
+  const { newBooks, setNewBooks } = useMyContext();
+  const [cartTotalPrice, setCartTotalPrice] = useState(0);
   const { cart, setCart } = useMyContext();
-   
+
+  const router = useRouter();
+
+  // Navigate to the desired page on button click
+  const handleClick = () => {
+    router.push('/cart');
+  };
+
   useEffect(() => {
-    let temp = 0;    
-    for(let i=0; i<cart.length; i++){
-      temp+= +cart[i].price.substring(1);
-      console.log(+cart[i].price.substring(1));
-      console.log("-------",temp);
+    let temp = 0;
+    for (let i = 0; i < cart.length; i++) {
+      temp += (+cart[i].price.substring(1) * +cart[i].quantity);
     }
     setCartTotalPrice(+temp.toFixed(2));
-  },[cart]);
+  }, [cart]);
 
-    useEffect(() => {
-    axios.get('https://api.itbook.store/1.0/new')
-      .then(response => {
-        setNewBooks(response.data);
+  useEffect(() => {
+    getNewBooks()
+      .then(data => {
+        setNewBooks(data);
       })
       .catch(error => {
         console.error(error);
       });
-  }, []);
 
+  }, []);
 
   return (
     <div>
       <div>
-        <TypographyComponent className="page-heading" text_variant={typography_variants.h3} name="Book Store" />
+        <Typography className="page-heading" variant="h3">Book Store</Typography>
       </div>
 
       <div className="searchbar-container">
         <SearchField />
-        <div className='cart-card'>
+        <div className='cart-card' onClick={handleClick}>
           <div style={{ fontWeight: 'bold' }}>Cart</div>
           <div>{cart.length} items</div>
           <div>$ {cartTotalPrice}</div>
@@ -73,13 +53,15 @@ export default function Home() {
       </div>
 
       <div style={{ margin: '40px' }}>
-        <div><TypographyComponent text_variant={typography_variants.h6} name="New Books" /></div>
+        <div>
+          <Typography variant="h6">New Books</Typography><br/>
+        </div>
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={2}>
             {
               newBooks.books?.map((e) =>
-                <Grid item xs={12} md={6} className='test'>
-                  <BookStoreCard image={e.image} title={e.title} subtitle={e.subtitle} isbn13={e.isbn13} price={e.price} />
+                <Grid item xs={12} md={6} key={e.isbn13}>
+                  <BookStoreCard image={e.image} title={e.title} subtitle={e.subtitle} isbn13={e.isbn13} price={e.price} url={e.url} />
                 </Grid>
               )
             }

@@ -9,6 +9,7 @@ body {
 
 .page-heading {
   text-align: center;
+  margin-top: 20px;
 }
 
 .searchbar-container {
@@ -41,4 +42,12 @@ body {
   display: flex;
   justify-content: space-evenly;
   flex-direction: column;
+}
+
+.cart-textfield-box {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    padding-top: 40px;
+    margin-right: 10px;
 }
