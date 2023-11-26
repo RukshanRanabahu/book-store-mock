@@ -3,16 +3,16 @@ import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
-import { useEffect, useRef, useState } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
 import { useMyContext } from '@/context/my-context';
-import { getNewBooks, searchBooks } from '../../actions/get-new-books'
+import { searchBooks } from '../../actions/get-new-books'
 
 export default function SearchField() {
   const [searchFieldValue, setSearchFieldValue] = useState<string>('');
   const { newBooks, setNewBooks } = useMyContext();
 
   const handleSearch = () => {
+    // calling search API if only searchFieldValue is not empty
     if (searchFieldValue.toString() != '')
       searchBooks(searchFieldValue.toString())
         .then(data => {
@@ -26,7 +26,8 @@ export default function SearchField() {
   return (
     <Paper
       component="form"
-      sx={{ marginRight: '20px', p: '2px 4px', display: 'flex', alignItems: 'center', width: 300, borderRadius: "100px" }}
+      className='search-field-container'
+      sx={{ p: '2px 4px' }}
     >
       <IconButton type="button" sx={{ p: '10px' }} aria-label="search" onClick={handleSearch}>
         <SearchIcon />

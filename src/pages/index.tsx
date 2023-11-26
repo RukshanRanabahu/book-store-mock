@@ -5,28 +5,13 @@ import BookStoreCard from '@/components/cards/book-store-card';
 import { useMyContext } from '../context/my-context';
 import { useRouter } from 'next/router';
 import { getNewBooks } from '../actions/get-new-books'
+import CartWidget from '@/components/cart-widget/cart-widget';
 
 export default function Home() {
   const { newBooks, setNewBooks } = useMyContext();
-  const [cartTotalPrice, setCartTotalPrice] = useState(0);
-  const { cart, setCart } = useMyContext();
-
-  const router = useRouter();
-
-  // Navigate to the desired page on button click
-  const handleClick = () => {
-    router.push('/cart');
-  };
 
   useEffect(() => {
-    let temp = 0;
-    for (let i = 0; i < cart.length; i++) {
-      temp += (+cart[i].price.substring(1) * +cart[i].quantity);
-    }
-    setCartTotalPrice(+temp.toFixed(2));
-  }, [cart]);
-
-  useEffect(() => {
+    // calling API for get new books details
     getNewBooks()
       .then(data => {
         setNewBooks(data);
@@ -43,19 +28,13 @@ export default function Home() {
         <Typography className="page-heading" variant="h3">Book Store</Typography>
       </div>
 
-      <div className="searchbar-container">
-        <SearchField />
-        <div className='cart-card' onClick={handleClick}>
-          <div style={{ fontWeight: 'bold' }}>Cart</div>
-          <div>{cart.length} items</div>
-          <div>$ {cartTotalPrice}</div>
-        </div>
-      </div>
+      <CartWidget showSearchField={true} />
 
-      <div style={{ margin: '40px' }}>
+      <div className='new-books-container'>
         <div>
-          <Typography variant="h6">New Books</Typography><br/>
+          <Typography variant="h6">New Books</Typography><br />
         </div>
+
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={2}>
             {
@@ -67,6 +46,7 @@ export default function Home() {
             }
           </Grid>
         </Box>
+
       </div>
     </div>
   )

@@ -44,10 +44,56 @@ body {
   flex-direction: column;
 }
 
+.cart-textfield {
+  width: 60px
+}
+
 .cart-textfield-box {
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-    padding-top: 40px;
-    margin-right: 10px;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  padding-top: 40px;
+  margin-right: 10px;
+}
+
+.total-text {
+  text-align: center;
+}
+
+.home-icon {
+  cursor: pointer;
+  font-size: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 50px;
+  margin-top: 25px;
+}
+
+.new-books-container {
+  margin: 40px
+}
+
+.search-field-container {
+  margin-right: 20px;
+  display: flex;
+  align-items: center;
+  width: 300;
+  border-radius: 100px;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.remove-button {
+  border: 1px solid black;
+  color: black;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.button-black-border {
+  border: 1px solid black;
+  color: black;
 }

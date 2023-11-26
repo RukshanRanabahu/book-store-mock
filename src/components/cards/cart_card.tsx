@@ -15,16 +15,14 @@ export default function CartCard(props: any) {
     const [itemCount, setItemCount] = React.useState(1);
 
     const modifieItem = (isbn13: string) => {
-        console.log(isbn13);
         const filterdCart = cart.map(obj => {
             if (obj.isbn13 === isbn13) {
-                return { ...obj,  quantity: +itemCount };
+                return { ...obj, quantity: +itemCount };
             }
             return obj;
         })
-        console.log('filterdCart',filterdCart);
         setCart(filterdCart);
-      };
+    };
 
 
     const removeItem = (isbn13: string) => {
@@ -32,12 +30,13 @@ export default function CartCard(props: any) {
             return isbn13 !== item.isbn13;
         })
         setCart(filterdCart);
-      };
+    };
 
     return (
         <Card sx={{ display: 'flex' }}>
             <Grid container spacing={2}>
                 <Grid item xs={4} md={3} className='test'>
+                    {/* card image */}
                     <CardMedia
                         component="img"
                         sx={{ width: 151 }}
@@ -47,6 +46,7 @@ export default function CartCard(props: any) {
                     />
                 </Grid>
 
+                {/* item details */}
                 <Grid item xs={8} md={4} className='test'>
                     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                         <CardContent sx={{ flex: '1 0 auto' }}>
@@ -77,34 +77,25 @@ export default function CartCard(props: any) {
                             }}
                             defaultValue={+props.quantity}
                             size="small"
-                            style={{ width: "60px" }}
+                            className='cart-textfield'
                             onChange={(event: any) => setItemCount(event.target.value)}
                         />
                     </Box>
                 </Grid>
 
+                {/* update and remove items on cart */}
                 <Grid item xs={6} md={2} className='cart-textfield-box'>
                     <Box className="cart-textfield-box">
                         <Button
                             size="small"
-                            style={{
-                                border: "1px solid black",
-                                color: "black",
-                                // width: '140px'
-                            }}
+                            className='button-black-border'
                             variant="outlined"
                             onClick={() => modifieItem(props.isbn13)}
                         >Update</Button>
 
                         <Button
                             size="small"
-                            style={{
-                                border: "1px solid black",
-                                color: "black",
-                                marginTop: '20px',
-                                marginBottom: '20px'
-                                // width: '140px'
-                            }}
+                            className='remove-button'
                             variant="outlined"
                             onClick={() => removeItem(props.isbn13)}
                         >Remove</Button>
